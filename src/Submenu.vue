@@ -84,8 +84,6 @@
   $deskt-width: 1280px;
 
   .submenu {
-    position: absolute;
-
     padding-top: 17px;
     padding-bottom: 10px;
     padding-left: 25px;
@@ -96,11 +94,22 @@
     overflow: hidden;
     cursor: default;
 
+    @media (min-width: $tablt-width) {
+      position: absolute;
+    }
+
     @media (max-width: $max-tablt-width) {
       top: 100%;
       left: 0;
 
       width: 100%;
+    }
+
+    @media (max-width: $max-mobl-width) {
+      height: calc(100vh - 6 * 50px);
+    }
+
+    @media (min-width: $tablt-width) and (max-width: $max-tablt-width) {
       height: calc(100vh - 100%);
     }
 
@@ -121,13 +130,20 @@
     }
 
     &__search-field {
-      display: flex;
       align-items: center;
       padding-bottom: 6px;
       margin-top: -3px;
       margin-bottom: 17px;
 
       border-bottom: 1px solid #BFC9E0;
+
+      @media (max-width: $max-mobl-width) {
+        display: none;
+      }
+
+      @media (min-width: $tablt-width) {
+        display: flex;
+      }
     }
 
     &__input {
@@ -228,6 +244,17 @@
       margin-bottom: 9px;
       background-color: #DFE4EF;
       border: none;
+    }
+  }
+
+  .sidebar__menu:not(.sidebar__menu--main) {
+    .submenu {
+      @media (max-width: $max-mobl-width) {
+        position: absolute;
+
+        width: 100%;
+        height: calc(100vh - 50px);
+      }
     }
   }
 </style>

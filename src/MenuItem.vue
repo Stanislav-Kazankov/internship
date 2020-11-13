@@ -1,32 +1,62 @@
 <template>
-  <li class="sidebar__menu-item" ref="menuItem" @click="onMenuItemClick"
-    :class="{'sidebar__menu-item--active': activeMenuItem === $refs.menuItem}"
-  >
-    <slot name="menuItemSvg"/>
-    <span class="sidebar__menu-item-caption"
-      :class="{'sidebar__menu-item-caption--small': menuItemCaptionIsSmall}"
-      :style="{width: sidebarIsExtended ? '100%' : '0'}"
+  <div class="sidebar__menu-item-wrapper">
+    <li class="sidebar__menu-item" ref="menuItem" @click="onMenuItemClick"
+      :class="{'sidebar__menu-item--active': activeMenuItem === $refs.menuItem}"
     >
-      <slot name="menuItemCaption"/>
-    </span>
+      <slot name="menuItemSvg"/>
+      <span class="sidebar__menu-item-caption"
+        :class="{'sidebar__menu-item-caption--small': menuItemCaptionIsSmall}"
+      >
+        <slot name="menuItemCaption"/>
+      </span>
+      <svg v-if="displayWidth <= 767" class="sidebar__menu-item-toggle-svg" width="7" height="12" viewBox="0 0 7 12" xmlns="http://www.w3.org/2000/svg">
+        <path d="M6.70905 6.69036C6.32111 7.07811 5.69215 7.07811 5.30421 6.69036L0.306472 1.69499C-0.0814626 1.30723 -0.081462 0.678565 0.306473 0.290813C0.694408 -0.0969372 1.32337 -0.0969372 1.71131 0.290813L6.70905 5.28619C7.09698 5.67394 7.09698 6.30261 6.70905 6.69036Z"/>
+        <path d="M6.70905 5.29413C6.32111 4.90637 5.69215 4.90637 5.30421 5.29413L0.290951 10.305C-0.096984 10.6928 -0.0969834 11.3214 0.290951 11.7092C0.678886 12.0969 1.30785 12.0969 1.69579 11.7092L6.70905 6.6983C7.09698 6.31054 7.09698 5.68188 6.70905 5.29413Z"/>
+      </svg>
+      <transition name="appear-roll-down-animation">
+        <app-submenu
+          :submenuItemNames="this.submenuItemNames"
+          :submenuIsNarrow="this.submenuIsNarrow"
+          :submenuHaveSearchField="this.submenuHaveSearchField"
+          v-if="displayWidth >= 768 && (
+              menuItemName !== 'userInfo' && activeMenuItem === $refs.menuItem
+              || menuItemName === 'userInfo' && activeMenuItem === $refs.menuItem && userIsAuthorized
+          )"
+        >
+          <template slot="additionalSubmenuItems">
+            <slot name="additionalSubmenuItems"/>
+          </template>
+        </app-submenu>
+      </transition>
+    </li>
     <transition name="appear-roll-down-animation">
       <app-submenu
         :submenuItemNames="this.submenuItemNames"
         :submenuIsNarrow="this.submenuIsNarrow"
         :submenuHaveSearchField="this.submenuHaveSearchField"
-        v-if="menuItemName !== 'userInfo' && activeMenuItem === $refs.menuItem
-          || menuItemName === 'userInfo' && activeMenuItem === $refs.menuItem && userIsAuthorized"
+        v-if="displayWidth < 768 && (
+            menuItemName !== 'userInfo' && activeMenuItem === $refs.menuItem
+            || menuItemName === 'userInfo' && activeMenuItem === $refs.menuItem && userIsAuthorized
+        )"
       >
         <template slot="additionalSubmenuItems">
           <slot name="additionalSubmenuItems"/>
         </template>
       </app-submenu>
     </transition>
-  </li>
+  </div>
 </template>
 
 <script>
   export default {
+    created () {
+      window.addEventListener('resize', this.updateDisplayWidth);
+    },
+    data () {
+      return {
+        displayWidth: window.screen.width
+      }
+    },
     props: [
       'menuItemName',
       'activeMenuItem',
@@ -34,12 +64,39 @@
       'submenuItemNames',
       'submenuIsNarrow',
       'submenuHaveSearchField',
-      'sidebarIsExtended',
       'userIsAuthorized'
     ],
     methods: {
       onMenuItemClick () {
         this.$emit('activeMenuItemChanged', this.$refs.menuItem);
+        if (this.menuItemName === 'settings' ||
+          this.menuItemName === 'support' ||
+          this.menuItemName === 'userInfo' ||
+          this.menuItemName === 'notifications' &&
+          this.displayWidth <= 767
+        ) {
+          this.$emit('closingMenuItemSelected');
+        }
+      },
+      updateDisplayWidth() {
+        this.displayWidth = window.screen.width;
+
+        const submenu = document.querySelector('.submenu');
+        if (submenu) {
+          const scrollbarArea = submenu.querySelector('.submenu__scrollbar');
+          if (this.displayWidth < 1280) {
+            submenu.style.width = '100%';
+            scrollbarArea.style.width = '100%';
+          } else {
+            if (this.menuItemName === "userInfo") {
+              submenu.style.width = '270px';
+              scrollbarArea.style.width = '233px';
+            } else {
+              submenu.style.width = '320px';
+              scrollbarArea.style.width = '283px';
+            }
+          }
+        }
       }
     }
   }
@@ -54,6 +111,16 @@
   .sidebar {
     &__menu {
       &--user {
+        .sidebar__menu-item-wrapper:first-child {
+          @media (max-width: $max-tablt-width) {
+            order: 2;
+          }
+
+          @media (min-width: $deskt-width) {
+            margin-left: -7px;
+          }
+        }
+
         .sidebar__avatar-box {
           width: 34px;
           height: 34px;
@@ -62,10 +129,17 @@
       }
 
       &--main {
+        .sidebar__menu-item-wrapper {
+          @media (max-width: $max-mobl-width) {
+            flex-direction: column;
+          }
+        }
+
         .sidebar__menu-item {
           transition: width 1s;
 
           @media (max-width: $max-mobl-width) {
+            justify-content: space-between;
             width: 100%;
             height: 50px;
 
@@ -96,6 +170,16 @@
             transition: stroke 1s;
           }
 
+          .sidebar__menu-item-toggle-svg {
+            fill: #8E9CBB;
+            transition: fill 1s;
+            transition: transform 1s;
+
+            @media (max-width: $max-mobl-width) {
+              display: flex;
+            }
+          }
+
           &--active {
             .sidebar__menu-item-svg:not(.sidebar__menu-item-svg--calculations):not(.sidebar__menu-item-svg--bookmarks) {
               fill: #FF238D;
@@ -111,9 +195,19 @@
             .sidebar__menu-item-caption {
               color: #FF238D;
             }
+
+            .sidebar__menu-item-toggle-svg {
+              fill: #FF238D;
+              transform: rotate(90deg);
+            }
           }
         }
       }
+    }
+
+    &__menu-item-wrapper {
+      display: flex;
+      justify-items: center;
     }
 
     &__menu-item {
@@ -129,7 +223,6 @@
       @media (min-width: $deskt-width) {
         display: grid;
         grid-template-columns: 19px auto;
-        grid-column-gap: 22px;
       }
 
       &-caption {
@@ -157,6 +250,18 @@
             display: block;
             margin-bottom: 1px;
           }
+        }
+      }
+
+      .sidebar__menu-item-toggle-svg {
+        display: none;
+      }
+    }
+
+    &--extended {
+      .sidebar__menu-item {
+        @media (min-width: $deskt-width) {
+          grid-column-gap: 22px;
         }
       }
     }
