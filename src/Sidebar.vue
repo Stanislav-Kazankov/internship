@@ -332,9 +332,11 @@
     methods: {
       onActiveMenuItemChange ($event) {
         this.activeMenuItem = this.activeMenuItem !== $event ? $event : null;
-        if (this.activeMenuItem) {
-          if (this.activeMenuItem.parentNode.parentNode.classList.contains('sidebar__menu--main')) {
-            this.sidebarIsOpen = true;
+        if (this.activeMenuItem !== null) {
+          if (this.activeMenuItem.parentNode !== null) {
+            if (this.activeMenuItem.parentNode.parentNode.classList.contains('sidebar__menu--main')) {
+              this.sidebarIsOpen = true;
+            }
           }
         }
       },
