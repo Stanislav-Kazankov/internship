@@ -420,20 +420,24 @@
       }
     }
 
-    &--open {
-      .sidebar__burger-svg {
-        display: none;
-      }
+    @media (max-width: $max-mobl-width) {
+      &--open {
+        position: relative;
 
-      .sidebar__cross-svg {
-        display: block;
-      }
+        .sidebar__burger-svg {
+          display: none;
+        }
 
-      .sidebar__menu--main {
-        @media (max-width: $max-mobl-width) {
-          display: flex;
-          transition: height 1s;
-          height: auto;
+        .sidebar__cross-svg {
+          display: block;
+        }
+
+        .sidebar__menu--main {
+          @media (max-width: $max-mobl-width) {
+            display: flex;
+            transition: height 1s;
+            height: auto;
+          }
         }
       }
     }
@@ -464,6 +468,8 @@
     }
 
     &__toggle {
+      outline: none;
+
       @media (max-width: $max-mobl-width) {
         display: flex;
         padding-left: 0;

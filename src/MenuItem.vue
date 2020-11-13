@@ -278,10 +278,12 @@
   }
 
   .appear-roll-down-animation-enter-active {
-    animation: 1s appear-animation;
-
     @media (max-width: $max-tablt-width) {
       transition: height 1s;
+    }
+
+    @media (min-width: $tablt-width) {
+      animation: 1s appear-animation;
     }
 
     @media (min-width: $deskt-width) {
@@ -294,11 +296,13 @@
       transition: height 1s;
     }
 
+    @media (min-width: $tablt-width) {
+      animation: 1s disappear-animation;
+    }
+
     @media (min-width: $deskt-width) {
       transition: width 1s;
     }
-
-    animation: 1s disappear-animation;
   }
 
   .appear-roll-down-animation-leave-to {

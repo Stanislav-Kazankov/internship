@@ -43,7 +43,7 @@
         if (window.screen.width >= '1280') {
           return this.submenuIsNarrow ? '270px' : '320px';
         } else {
-          return '100%'; /*100vw*/
+          return '100%';
         }
       },
       scrollbarAreaWidth () {
@@ -89,6 +89,7 @@
     padding-left: 25px;
     padding-right: 12px;
 
+    background-color: #FFFFFF;
     box-shadow: 0px 0px 20px rgba(8, 20, 45, 0.3);
 
     overflow: hidden;
@@ -106,10 +107,11 @@
     }
 
     @media (max-width: $max-mobl-width) {
-      height: 440px;/*calc(100vh - 6 * 50px);*/
+      height: 440px;
     }
 
     @media (min-width: $tablt-width) and (max-width: $max-tablt-width) {
+      min-height: auto;
       height: calc(100vh - 100%);
     }
 
