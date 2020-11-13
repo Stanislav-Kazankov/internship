@@ -43,7 +43,7 @@
         if (window.screen.width >= '1280') {
           return this.submenuIsNarrow ? '270px' : '320px';
         } else {
-          return '100vw';
+          return '100%'; /*100vw*/
         }
       },
       scrollbarAreaWidth () {
@@ -106,7 +106,7 @@
     }
 
     @media (max-width: $max-mobl-width) {
-      height: calc(100vh - 6 * 50px);
+      height: 440px;/*calc(100vh - 6 * 50px);*/
     }
 
     @media (min-width: $tablt-width) and (max-width: $max-tablt-width) {

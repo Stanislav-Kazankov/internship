@@ -29,7 +29,7 @@
 <style lang="scss">
   html {
     box-sizing: border-box;
-        height: 100%;
+    height: 100%;
   }
 
   *,
@@ -73,7 +73,7 @@
 
   body {
     min-width: 320px;
-    height: 100%;
+    min-height: 100%;
     margin-top: 0;
     margin-bottom: 0;
     margin-left: auto;
