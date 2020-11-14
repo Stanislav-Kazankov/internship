@@ -91,7 +91,6 @@
   $deskt-width: 1280px;
 
   .submenu {
-    padding-top: 17px;
     padding-bottom: 10px;
     padding-left: 25px;
     padding-right: 12px;
@@ -115,11 +114,13 @@
 
     @media (max-width: $max-mobl-width) {
       height: 440px;
+      padding-top: 20px;
     }
 
     @media (min-width: $tablt-width) and (max-width: $max-tablt-width) {
       min-height: auto;
       height: calc(100vh - 100%);
+      padding-top: 23px;
     }
 
     @media (min-width: $deskt-width) {
@@ -127,6 +128,7 @@
       left: 100%;
 
       height: 100%;
+      padding-top: 17px;
     }
 
     &__scrollbar {
@@ -220,12 +222,25 @@
       margin-bottom: 12px;
 
       font-weight: 400;
-      font-size: 13px;
-      line-height: 200%;
       letter-spacing: normal;
       text-transform: capitalize;
 
       color: #0066FF;
+
+      @media (max-width: $max-tablt-width) {
+        font-size: 14px;
+        line-height: 260%;
+        letter-spacing: 0.2pt;
+      }
+
+      @media (max-width: $max-mobl-width) {
+        margin-top: -9px;
+      }
+
+      @media (min-width: $deskt-width) {
+        font-size: 13px;
+        line-height: 200%;
+      }
     }
 
     &__item {
@@ -266,6 +281,5 @@
       }
     }
   }
-
 
 </style>

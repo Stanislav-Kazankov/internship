@@ -270,16 +270,20 @@
   .appear-roll-down-animation-enter {
     @media (max-width: $max-tablt-width) {
       height: 0 !important;
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
     }
 
     @media (min-width: $deskt-width) {
       width: 0 !important;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
     }
   }
 
   .appear-roll-down-animation-enter-active {
     @media (max-width: $max-tablt-width) {
-      transition: height 1s;
+      transition: height 1s, padding-top 1s, padding-bottom 1s;
     }
 
     @media (min-width: $tablt-width) {
@@ -287,13 +291,13 @@
     }
 
     @media (min-width: $deskt-width) {
-      transition: width 1s;
+      transition: width 1s, padding-left 1s, padding-right 1s;
     }
   }
 
   .appear-roll-down-animation-leave-active {
     @media (max-width: $max-tablt-width) {
-      transition: height 1s;
+      transition: height 1s, padding-top 1s, padding-bottom 1s;
     }
 
     @media (min-width: $tablt-width) {
@@ -301,17 +305,21 @@
     }
 
     @media (min-width: $deskt-width) {
-      transition: width 1s;
+      transition: width 1s, padding-left 1s, padding-right 1s;
     }
   }
 
   .appear-roll-down-animation-leave-to {
     @media (max-width: $max-tablt-width) {
       height: 0 !important;
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
     }
 
     @media (min-width: $deskt-width) {
       width: 0 !important;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
     }
   }
 

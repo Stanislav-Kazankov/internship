@@ -371,7 +371,15 @@
       updateDisplayWidth(evt) {
         if (window.innerWidth < 768 && this.displayWidth >= 768 && !this.sidebarIsOpen) {
           const mainMenu = document.querySelector('.sidebar__menu--main');
-          mainMenu.style.display = 'none';
+          if (mainMenu !== null) {
+            mainMenu.style.display = 'none';
+          }
+        }
+        if (window.innerWidth < 768 && this.displayWidth >= 768) {
+          const submenu = document.querySelector('.submenu');
+          if (submenu !== null) {
+            submenu.style.transition = 'none';
+          }
         }
         if (this.displayWidth < 768 && window.innerWidth >= 768 && this.activeMenuItem === null) {
           this.sidebarIsOpen = false;
