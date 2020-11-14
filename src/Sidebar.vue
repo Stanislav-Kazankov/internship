@@ -373,6 +373,9 @@
           const mainMenu = document.querySelector('.sidebar__menu--main');
           mainMenu.style.display = 'none';
         }
+        if (this.displayWidth < 768 && window.innerWidth >= 768 && this.activeMenuItem === null) {
+          this.sidebarIsOpen = false;
+        }
         this.displayWidth = window.innerWidth;
       }
     }
