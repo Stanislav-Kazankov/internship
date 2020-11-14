@@ -137,6 +137,7 @@
         if (Array.from(descendantElements).indexOf($event.target) === -1
           && $event.target !== sidebarElement) {
           this.$refs.sidebar.activeMenuItem = null;
+          this.$refs.sidebar.sidebarIsOpen = false;
         }
       }
     }

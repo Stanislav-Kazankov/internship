@@ -341,14 +341,19 @@
     },
     methods: {
       onActiveMenuItemChange ($event) {
-        this.activeMenuItem = this.activeMenuItem !== $event ? $event : null;
-        if (this.activeMenuItem !== null) {
-          if (this.activeMenuItem.parentNode !== null) {
-            if (this.activeMenuItem.parentNode.parentNode.classList.contains('sidebar__menu--main')) {
-              this.sidebarIsOpen = true;
+        if ($event !== null) {
+          if ($event.parentNode !== null) {
+            if ($event.parentNode.parentNode.classList.contains('sidebar__menu--main')) {
+              if (this.activeMenuItem === $event && this.displayWidth >= 768) {
+                this.sidebarIsOpen = !this.sidebarIsOpen;
+              }
+              if (this.activeMenuItem !== $event) {
+                this.sidebarIsOpen = true;
+              }
             }
           }
         }
+        this.activeMenuItem = this.activeMenuItem !== $event ? $event : null;
       },
       onClosingMenuItemSelect () {
         this.sidebarIsOpen = false;

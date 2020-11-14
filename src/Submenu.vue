@@ -25,6 +25,9 @@
 
 <script>
   export default {
+    created () {
+      window.addEventListener('resize', this.updateDisplayWidth);
+    },
     props: {
       submenuItemNames: {},
       submenuIsNarrow: {},
@@ -34,20 +37,21 @@
     },
     data () {
       return {
+        displayWidth: window.innerWidth,
         searchString: '',
         activeMenuItem: null
       }
     },
     computed: {
       submenuWidth () {
-        if (window.screen.width >= '1280') {
+        if (this.displayWidth >= '1280') {
           return this.submenuIsNarrow ? '270px' : '320px';
         } else {
           return '100%';
         }
       },
       scrollbarAreaWidth () {
-        if (window.screen.width >= '1280') {
+        if (this.displayWidth >= '1280') {
           return this.submenuIsNarrow ? '233px' : '283px';
         } else {
           return '100%';
@@ -60,6 +64,9 @@
       }
     },
     methods: {
+      updateDisplayWidth() {
+        this.displayWidth = window.innerWidth;
+      },
       onSubmenuItemClick ($event) {
         if (this.activeMenuItem) {
           this.activeMenuItem.classList.remove('submenu__item--active');
@@ -259,4 +266,6 @@
       }
     }
   }
+
+
 </style>
