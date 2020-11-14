@@ -54,7 +54,7 @@
     },
     data () {
       return {
-        displayWidth: window.screen.width
+        displayWidth: window.innerWidth
       }
     },
     props: [
@@ -79,7 +79,7 @@
         }
       },
       updateDisplayWidth() {
-        this.displayWidth = window.screen.width;
+        this.displayWidth = window.innerWidth;
 
         const submenu = document.querySelector('.submenu');
         if (submenu) {
@@ -171,9 +171,8 @@
           }
 
           .sidebar__menu-item-toggle-svg {
+            transition: all 1s;
             fill: #8E9CBB;
-            transition: fill 1s;
-            transition: transform 1s;
 
             @media (max-width: $max-mobl-width) {
               display: flex;
@@ -197,6 +196,7 @@
             }
 
             .sidebar__menu-item-toggle-svg {
+              transition: all 1s;
               fill: #FF238D;
               transform: rotate(90deg);
             }
