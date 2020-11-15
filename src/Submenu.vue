@@ -1,5 +1,5 @@
 <template>
-  <div class="submenu" :style="{'width': submenuWidth}" @click.stop>
+  <div class="submenu" ref="submenu" :style="{'width': submenuWidth}" @click.stop>
     <app-scrollbar classes="submenu__scrollbar" ref="Scrollbar" :style="{'width': scrollbarAreaWidth}">
       <div>
         <div class="submenu__search-field" v-if="submenuHaveSearchField === true">
@@ -27,6 +27,23 @@
   export default {
     created () {
       window.addEventListener('resize', this.updateDisplayWidth);
+
+      const config = { attributes: false, childList: true, subtree: true };
+
+      const observer = new MutationObserver((mutationsList, observer) => {
+        const submenu = document.querySelector('.submenu');
+        if (submenu !== null) {
+          if (768 <= window.innerWidth && window.innerWidth < 1280) {
+            if (submenu.clientHeight <= window.innerHeight - 50 && submenu.style.height !== 'calc(100vh - 100%)') {
+              submenu.style.height = 'auto';
+            } else {
+              submenu.style.height = 'calc(100vh - 100%)';
+            }
+          }
+        }
+      });
+
+      observer.observe(document.querySelector('.sidebar'), config);
     },
     props: {
       submenuItemNames: {},
@@ -65,6 +82,19 @@
     },
     methods: {
       updateDisplayWidth() {
+        const submenu = document.querySelector('.submenu');
+        if (submenu !== null) {
+          if (768 <= window.innerWidth && window.innerWidth < 1280 && submenu.style.height !== 'calc(100vh - 100%)') {
+            if (submenu.clientHeight <= window.innerHeight - 50) {
+              submenu.style.height = 'auto';
+            } else {
+              submenu.style.height = 'calc(100vh - 100%)';
+            }
+          }
+          if (1280 < window.innerWidth) {
+            submenu.style.height = '100%';
+          }
+        }
         this.displayWidth = window.innerWidth;
       },
       onSubmenuItemClick ($event) {
@@ -112,6 +142,8 @@
       width: 100%;
     }
 
+    height: calc(100vh - 100%);
+
     @media (max-width: $max-mobl-width) {
       height: 440px;
       padding-top: 20px;
@@ -119,7 +151,6 @@
 
     @media (min-width: $tablt-width) and (max-width: $max-tablt-width) {
       min-height: auto;
-      height: calc(100vh - 100%);
       padding-top: 23px;
     }
 
