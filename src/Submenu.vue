@@ -92,6 +92,9 @@
             }
           }
           if (1280 < window.innerWidth) {
+            if (this.$refs.Scrollbar !== undefined) {
+              this.$refs.Scrollbar.scrollToY(0);
+            }
             submenu.style.height = '100%';
           }
         }
