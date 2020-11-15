@@ -33,6 +33,13 @@
       const observer = new MutationObserver((mutationsList, observer) => {
         const submenu = document.querySelector('.submenu');
         if (submenu !== null) {
+          if (window.innerWidth < 768) {
+            if (submenu.clientHeight <= window.innerHeight - 50) {
+              submenu.style.height = 'auto';
+            } else {
+              submenu.style.height = '440px';
+            }
+          }
           if (768 <= window.innerWidth && window.innerWidth < 1280) {
             if (submenu.clientHeight <= window.innerHeight - 50 && submenu.style.height !== 'calc(100vh - 100%)') {
               submenu.style.height = 'auto';
@@ -84,6 +91,13 @@
       updateDisplayWidth() {
         const submenu = document.querySelector('.submenu');
         if (submenu !== null) {
+          if (window.innerWidth < 768) {
+            if (submenu.clientHeight <= window.innerHeight - 50) {
+              submenu.style.height = 'auto';
+            } else {
+              submenu.style.height = '440px';
+            }
+          }
           if (768 <= window.innerWidth && window.innerWidth < 1280 && submenu.style.height !== 'calc(100vh - 100%)') {
             if (submenu.clientHeight <= window.innerHeight - 50 && submenu.style.height !== "") {
               submenu.style.height = 'auto';
@@ -91,7 +105,7 @@
               submenu.style.height = 'calc(100vh - 100%)';
             }
           }
-          if (1280 < window.innerWidth) {
+          if (1280 <= window.innerWidth) {
             if (this.$refs.Scrollbar !== undefined) {
               this.$refs.Scrollbar.scrollToY(0);
             }
