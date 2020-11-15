@@ -85,7 +85,7 @@
         const submenu = document.querySelector('.submenu');
         if (submenu !== null) {
           if (768 <= window.innerWidth && window.innerWidth < 1280 && submenu.style.height !== 'calc(100vh - 100%)') {
-            if (submenu.clientHeight <= window.innerHeight - 50) {
+            if (submenu.clientHeight <= window.innerHeight - 50 && submenu.style.height !== "") {
               submenu.style.height = 'auto';
             } else {
               submenu.style.height = 'calc(100vh - 100%)';
